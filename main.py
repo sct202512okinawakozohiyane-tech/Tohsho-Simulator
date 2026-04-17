@@ -6,8 +6,12 @@ from datetime import datetime, timedelta
 import time
 import json
 import os
+from requests import Session
 
 WATCHLIST_FILE = os.path.join(os.path.dirname(__file__), "watchlist.json")
+
+_session = Session()
+_session.headers["User-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
 def load_watchlist():
     if os.path.exists(WATCHLIST_FILE):
@@ -28,7 +32,7 @@ st.set_page_config(
 
 def get_stock_data(ticker: str, period: str = "3mo") -> pd.DataFrame | None:
     try:
-        stock = yf.Ticker(ticker)
+        stock = yf.Ticker(ticker, session=_session)
         df = stock.history(period=period)
         if df.empty:
             return None
@@ -145,7 +149,7 @@ def analyze_signals(df: pd.DataFrame) -> dict:
 
 def get_realtime_quote(ticker: str) -> dict | None:
     try:
-        stock = yf.Ticker(ticker)
+        stock = yf.Ticker(ticker, session=_session)
         info = stock.fast_info
         hist = stock.history(period="2d")
         if hist.empty:
