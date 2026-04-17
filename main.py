@@ -6,11 +6,11 @@ from datetime import datetime, timedelta
 import time
 import json
 import os
-from requests import Session
+import curl_cffi.requests as requests
 
 WATCHLIST_FILE = os.path.join(os.path.dirname(__file__), "watchlist.json")
 
-_session = Session()
+_session = requests.Session()
 _session.headers["User-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
 def load_watchlist():
