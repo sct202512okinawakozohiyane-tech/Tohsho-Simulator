@@ -1,14 +1,4 @@
 streamlit
-altair
-attrs
-Babel
-beautifulsoup4
-blinker
-pandas
-matplotlib
 yfinance
-plotly.graph_objects
-datetime
-time
-json
-os
+pandas
+plotly
